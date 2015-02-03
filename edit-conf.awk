@@ -6,7 +6,7 @@ BEGIN {
   documentRoot = sprintf("/Users/%s/Sites/www.lexmark.com/site", ENVIRON["USER"]);
 }
 # Listen on port 8485 (pronouced eighty, four-eighty-five)
-/^[ \t]*Listen[ \t]+/ { print $1, "8485"; next; }
+/^[ \t]*Listen[ \t]+/ { print $1, "127.0.0.1:8485"; next; }
 # Have Apache run as the current user
 /^[ \t]*User[ \t]+/ { print $1, ENVIRON["USER"]; next; }
 /^[ \t]*Group[ \t]+/ { print $1, "staff"; next; }
@@ -29,8 +29,7 @@ inLoadModule && !/^[ \t]*(#|LoadModule|AddType)/ { inLoadModule = 0;
 #Secure the Root Directory
 /^[ \t]*<Directory[ \t]*\/[ \t]*>/ { inRootDirectory = 1;
     print;
-    print "  Order Deny,Allow";
-    print "  Deny from All";
+    print "  Require all denied";
     print "</Directory>";
     next;
 }
@@ -46,7 +45,7 @@ inRootDirectory { next; }
   print("  AddDefaultCharset utf-8");
   print("  Require local");
   print("</Directory>");
-  printf("\nAlias /@locale@ %s/en_US\n\n", documentRoot);
+  printf("\nAlias /@locale@ %s/en_US\n", documentRoot);
   next;
 }
 # Supress the Alias line for @locale@
