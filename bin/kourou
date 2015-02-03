@@ -1,5 +1,10 @@
 #! /bin/bash
 echo "Starting Kourou client ..."
+host -W 1 -4 us-auto.proxy.lexmark.com > /dev/null
+if [ $? -ne 0 ]; then
+	echo "Oops! You must be on the Lexmark network (or VPN) to kourou."
+	exit 1
+fi
 if [[ -z $(netstat -anp tcp | awk '$6 == "LISTEN" && $4 ~ "\.8485"') ]]; then
    echo "Starting Apache ..."
    apachectl start

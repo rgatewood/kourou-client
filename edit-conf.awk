@@ -1,4 +1,7 @@
 BEGIN {
+  if (length(HOMEBREW_PREFIX) == 0) {
+     HOMEBREW_PREFIX = "/usr/local";
+  }
   inLoadModule = 0;
   inRootDirectory = 0;
   inDocumentRootDirectory = 0;
@@ -21,7 +24,7 @@ inLoadModule && !/^[ \t]*(#|LoadModule|AddType)/ { inLoadModule = 0;
   # for (i in hasModules) { print i }
   if (!("php5_module" in hasModules)) {
     # Add php module using homebrew version of PHP
-    print "LoadModule php5_module /usr/local/opt/php55/libexec/apache2/libphp5.so"
+    print "LoadModule php5_module " HOMEBREW_PREFIX "/opt/php55/libexec/apache2/libphp5.so"
     print "AddType application/x-httpd-php .php"
   }
 }
