@@ -1,6 +1,7 @@
 #! /bin/bash
 echo "Starting Kourou client ..."
 if [[ -z $(netstat -anp tcp | awk '$6 == "LISTEN" && $4 ~ "\.8485"') ]]; then
+   echo "Starting Apache ..."
    apachectl start
 fi
 open "http://kouroutool.rds.lexmark.com/first-run.php?localhost=127.0.0.1:8485&svn=homebrew"
