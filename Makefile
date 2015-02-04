@@ -5,10 +5,10 @@ SVNURL = https://cougar.mw.lexmark.com/lexmark.com/prod/site
 CONTENTDIR = ~/Sites/www.lexmark.com/site
 
 # Homebrew Folder
-HOMEBREW_PREFIX = $(shell brew --prefix)
+prefix = /usr/local
 
 # Location of the Apache config file
-CONFPATH = $(HOMEBREW_PREFIX)/etc/apache2/2.4
+CONFPATH = $(prefix)/etc/apache2/2.4
 CONFFILE = $(CONFPATH)/httpd.conf
 
 # name of the backup file.
@@ -26,4 +26,4 @@ checkout:
 
 editConfig:
 	cp $(CONFFILE) $(CONFBACKUP)
-	awk -v HOMEBREW_PREFIX=$(HOMEBREW_PREFIX) -f edit-conf.awk < $(CONFBACKUP) > $(CONFFILE)
+	awk -v HOMEBREW_PREFIX=$(prefix) -f edit-conf.awk < $(CONFBACKUP) > $(CONFFILE)
